@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culinary Portfolio & Smart Food Recommendation</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Sticky Navigation (Glassmorphism) -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="brand">
+                <span class="brand-text">Culinary<span class="accent">.</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">Discover</a></li>
+                <li><a href="#menu">Collection</a></li>
+                <li><a href="#" id="toggle-dashboard" class="btn-outline">Smart Dashboard</a></li>
+                <li><a href="#" id="toggle-cart"><i class="fa-solid fa-cart-shopping"></i> <span id="cart-count" class="badge">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Floating Dashboard Sidebar -->
+    <aside id="smart-dashboard" class="dashboard-panel">
+        <div class="dashboard-header">
+            <h3>Smart Recommendations</h3>
+            <button class="close-dashboard" id="close-dashboard"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="dashboard-body">
+            <div class="control-group">
+                <label for="calorie-slider">Calorie Limit: <span id="cal-value" class="sage-text">800 kcal</span></label>
+                <input type="range" id="calorie-slider" min="200" max="1500" value="800" step="50" class="styled-slider">
+            </div>
+            
+            <div class="control-group">
+                <label>Nutritional Goals</label>
+                <div class="pill-group">
+                    <button class="toggle-pill active" data-goal="high-protein">High Protein</button>
+                    <button class="toggle-pill" data-goal="low-carb">Low Carb</button>
+                    <button class="toggle-pill" data-goal="balanced">Balanced</button>
+                    <button class="toggle-pill" data-goal="low-fat">Low Fat</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Dietary Preferences</label>
+                <div class="pill-group">
+                    <button class="toggle-pill" data-pref="vegan">Vegan</button>
+                    <button class="toggle-pill" data-pref="vegetarian">Vegetarian</button>
+                    <button class="toggle-pill" data-pref="gluten-free">Gluten-Free</button>
+                </div>
+            </div>
+
+            <button class="btn-primary w-100 mt-4" id="apply-recommendations">Find My Meal</button>
+        </div>
+    </aside>
+
+    <!-- Shopping Cart Sidebar -->
+    <aside id="cart-sidebar" class="dashboard-panel">
+        <div class="dashboard-header">
+            <h3>Your Order</h3>
+            <button class="close-dashboard" id="close-cart"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="dashboard-body" style="display: flex; flex-direction: column; height: calc(100vh - 80px); padding-bottom: 2rem;">
+            <div id="cart-items" style="flex-grow: 1; overflow-y: auto;">
+                <p style="text-align: center; color: var(--color-muted); margin-top: 2rem;">Your cart is empty.</p>
+            </div>
+            <div class="cart-footer" style="padding-top: 1rem; border-top: 1px solid var(--color-border); margin-top: auto;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 600;">
+                    <span>Total:</span>
+                    <span id="cart-total">₹0.00</span>
+                </div>
+                <button class="btn-primary w-100" id="checkout-btn">Checkout</button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="dashboard-overlay" id="dashboard-overlay"></div>
+
+    <!-- Hero Section with Smooth Fade-in -->
+    <header id="hero" class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="container hero-container">
+            <div class="hero-text-content fade-in">
+                <span class="hero-kicker">Michelin-Inspired Experience</span>
+                <h1 class="hero-title">Elevate Your<br>Palate.</h1>
+                <p class="hero-desc">Experience a symphony of flavors tailored to your precise nutritional aspirations and lifestyle goals.</p>
+                <a href="#menu" class="btn-primary hero-btn">Explore Collection</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Menu Layout (Grid) -->
+    <main id="menu" class="menu-section bg-cream">
+        <div class="container fade-in-up">
+            <div class="section-heading">
+                <h2>The Collection</h2>
+                <div class="heading-divider"></div>
+            </div>
+            
+            <div class="search-container" style="max-width: 500px; margin: 0 auto 2rem; position: relative;">
+                <input type="text" id="search-input" placeholder="Search for dishes..." style="width: 100%; padding: 1rem 1.5rem; border-radius: 50px; border: 1px solid var(--color-border); font-size: 1rem; outline: none; transition: box-shadow 0.3s ease;">
+                <i class="fa-solid fa-magnifying-glass" style="position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); color: var(--color-muted);"></i>
+            </div>
+
+            <div class="menu-filters" id="menu-filters">
+                <button class="filter-tab active" data-filter="all">All Expressions</button>
+                <button class="filter-tab" data-filter="specials">Chef's Signatures</button>
+            </div>
+
+            <div class="grid-layout" id="food-grid">
+                <!-- Skeleton Loaders -->
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Macros Modal -->
+    <div class="modal-overlay" id="macros-modal">
+        <div class="modal-dialog">
+            <button class="modal-close" id="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-content" id="modal-content">
+                <!-- Content Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="brand">Culinary<span class="accent">.</span></div>
+            <p>&copy; 2026 Crafted with Excellence.</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
